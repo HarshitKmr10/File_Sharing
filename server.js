@@ -10,7 +10,14 @@ app.use(express.urlencoded({ extended:true}))
 
 const upload = multer({ dest: "uploads" }) 
 
- mongoose.connect(process.env.DATABASE_URL)
+ mongoose.connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+ }).then(data => {
+    console.log(`MongoDB connected with server : ${data.connection.host}`);
+ }).catch(err => {
+    console.log(err);
+ })
 
 app.set("view engine","ejs")
 
